@@ -44,7 +44,7 @@ select{font:inherit;padding:6px}
   <div class="col">
     <section class="sheet">
       <h2>사진 넣기</h2>
-      <label class="pick" id="pick"><div id="pickTxt">눌러서 사진 고르기</div><input type="file" id="file" accept="image/*"></label>
+      <label class="pick" id="pick"><img id="pickImg" alt="" hidden><div id="pickTxt">눌러서 사진 고르기</div><input type="file" id="file" accept="image/*"></label>
       <div class="row"><span>여백</span><input type="range" id="margin" min="10" max="80" value="34"></div>
       <div class="row"><span>거칠기</span><input type="range" id="rough" min="20" max="100" value="65"></div>
       <div class="row"><span>종이색</span><div class="sw" id="sw"></div></div>
@@ -183,9 +183,8 @@ const msg=(t,err)=>{$("#msg").textContent=t;$("#msg").className=err?"err":"";};
 
 $("#file").onchange=e=>{
   file=e.target.files[0];if(!file)return;
-  const u=URL.createObjectURL(file);
-  $("#pick").innerHTML=`<img src="${u}" alt=""><div>다른 사진 고르기</div><input type="file" id="file2" accept="image/*">`;
-  $("#file2").onchange=ev=>{$("#file").files=ev.target.files;$("#file").onchange({target:ev.target});};
+  $("#pickImg").src=URL.createObjectURL(file);$("#pickImg").hidden=false;
+  $("#pickTxt").textContent="다른 사진 고르기";
   $("#go").disabled=false;msg("");
 };
 
